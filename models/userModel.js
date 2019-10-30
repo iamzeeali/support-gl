@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please tell us your name!"]
   },
+  company: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Company"
+  },
   email: {
     type: String,
     required: [true, "Please provide your email"],
@@ -18,7 +22,7 @@ const userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ["user", "guide", "lead-guide", "admin"],
+    enum: ["user", "admin"],
     default: "user"
   },
   password: {
@@ -102,5 +106,15 @@ userSchema.methods.createPasswordResetToken = function() {
 
   return resetToken;
 };
+
+userSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: "company",
+    select:
+      "-shortName -country -state -city -companyEmail -companyPhone -contactPerson -contactPersonPhone -contactPersonEmail -__v"
+  });
+
+  next();
+});
 
 module.exports = User = mongoose.model("User", userSchema);

@@ -19,9 +19,7 @@ exports.getAll = Model =>
     res.status(200).json({
       status: "success",
       result: docs.length,
-      data: {
-        data: docs
-      }
+      data: docs
     });
   });
 
@@ -51,9 +49,7 @@ exports.createOne = Model =>
 
     res.status(201).json({
       status: "success",
-      data: {
-        data: doc
-      }
+      data: doc
     });
   });
 

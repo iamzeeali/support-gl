@@ -12,6 +12,9 @@ const cookieParser = require("cookie-parser");
 const compression = require("compression");
 
 const userRouter = require("./routes/userRoutes");
+const companyRouter = require("./routes/companyRoutes");
+const activityRouter = require("./routes/activityRoutes");
+const activityLogRouter = require("./routes/activityLogRoutes");
 
 const app = express();
 
@@ -78,6 +81,9 @@ app.use(compression());
 //***************************/ROUTES***********************************
 
 app.use("/api/user", userRouter);
+app.use("/api/company", companyRouter);
+app.use("/api/activity", activityRouter);
+app.use("/api/activityLog", activityLogRouter);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
