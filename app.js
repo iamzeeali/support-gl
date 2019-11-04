@@ -8,7 +8,6 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
-const cookieParser = require("cookie-parser");
 const compression = require("compression");
 
 const userRouter = require("./routes/userRoutes");
@@ -52,9 +51,6 @@ app.use("/api", limiter);
 
 //body parser, reading data into req.body
 app.use(express.json({ limit: "10kb" }));
-
-//Cookie Parser
-app.use(cookieParser());
 
 //Data sanitization against Nosql query injections
 app.use(mongoSanitize());

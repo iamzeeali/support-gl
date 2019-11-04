@@ -37,9 +37,7 @@ exports.getOne = (Model, populateOptions) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc
-      }
+      data: doc
     });
   });
 
@@ -66,9 +64,7 @@ exports.updateOne = Model =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc
-      }
+      data: doc
     });
   });
 

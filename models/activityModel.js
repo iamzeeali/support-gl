@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const activitySchema = new mongoose.Schema({
   company: {
     type: mongoose.Schema.ObjectId,
-    ref: "Company",
-    required: [true, "Please enter a company"]
+    ref: "Company"
   },
   activityName: {
     type: String,
@@ -12,7 +11,8 @@ const activitySchema = new mongoose.Schema({
     unique: true
   },
   subActivities: {
-    type: [String]
+    type: [String],
+    unique: true
   },
   active: {
     type: Boolean,
