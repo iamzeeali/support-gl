@@ -54,7 +54,7 @@
   background-color: #2e353d;
   position: fixed;
   top: 0px;
-  width: 18%;
+  width: 20%;
   height: 100%;
   color: #e1ffff;
 }
@@ -556,4 +556,27 @@ body {
   background: #fff;
   color: #333;
   border: #ccc solid 1px;
+}
+
+.request-meu-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.request-meu-item:hover {
+  text-decoration: none;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+h2:hover {
+  text-decoration: none;
+}
+
+.request-meu-item i {
+  font-size: 60px;
+  padding: 20px 0;
 }

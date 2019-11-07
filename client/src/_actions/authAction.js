@@ -6,7 +6,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  AUTH_ERROR
+  AUTH_ERROR,
+  CLEAR_USER,
+  CLEAR_ACTIVITY,
+  CLEAR_COMPANY
 } from "./types";
 
 // Load User
@@ -44,11 +47,9 @@ export const login = (email, password) => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: res.data
     });
-
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data;
-
     if (errors) {
       dispatch(setAlert(errors.message, "danger"));
     }
@@ -61,5 +62,8 @@ export const login = (email, password) => async dispatch => {
 
 // Logout / Clear Profile
 export const logout = () => dispatch => {
+  dispatch({ type: CLEAR_USER });
+  dispatch({ type: CLEAR_ACTIVITY });
+  dispatch({ type: CLEAR_COMPANY });
   dispatch({ type: LOGOUT });
 };

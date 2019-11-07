@@ -21,7 +21,6 @@ const Activity = ({
 }) => {
   useEffect(() => {
     getActivities();
-    clearActivity();
     //eslint-diable-next-line
   }, [getActivities]);
 

@@ -72,7 +72,6 @@ export const editActivity = (formData, history, id) => async dispatch => {
     };
 
     const res = await axios.patch(`/api/activity/${id}`, formData, config);
-    console.log(res.data);
 
     dispatch({
       type: types.GET_ACTIVITY,

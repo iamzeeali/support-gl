@@ -2,9 +2,13 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import { logout } from "../../_actions/authAction";
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }, props) => {
+const Navbar = (
+  { auth: { isAuthenticated, loading, role }, logout },
+  props
+) => {
   const authLinks = (
     <Fragment>
       <div className="nav-side-menu">
@@ -70,19 +74,27 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }, props) => {
               </Link>
             </li>
             <ul className="sub-menu collapse" id="new">
-              <li>Alarmstatistik</li>
-              <li>Prozessfähigkeit</li>
+              <li>All Logs</li>
             </ul>
 
-            <li>
+            <li
+              data-toggle="collapse"
+              data-target="#user"
+              className="collapsed"
+            >
               <Link to="#">
-                <i className="fa fa-user fa-lg"></i> Profile
+                <i className="fa fa-car fa-lg"></i> User Setting{" "}
+                <span className="arrow"></span>
               </Link>
             </li>
+            <ul className="sub-menu collapse" id="user">
+              <li>All Users</li>
+              <li>Create user</li>
+            </ul>
 
             <li data-toggle="collapse" data-target="#new" className="collapsed">
               <Link to="#">
-                <i className="fa fa-car fa-lg"></i> Account{" "}
+                <i className="fa fa-car fa-lg"></i> Power{" "}
                 <span className="arrow"></span>
               </Link>
             </li>
@@ -92,7 +104,61 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }, props) => {
                   Logout
                 </Link>
               </li>
-              <li>Betriebsarten</li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+      <main className="page-wrapper">{props.children}</main>
+    </Fragment>
+  );
+
+  const userAuthLinks = (
+    <Fragment>
+      <div className="nav-side-menu">
+        <div className="brand">
+          <h2 className="lead">support@globuslabs.com</h2>
+        </div>
+        <i
+          className="fa fa-bars fa-2x toggle-btn"
+          data-toggle="collapse"
+          data-target="#menu-content"
+        ></i>
+
+        <div className="menu-list">
+          <ul id="menu-content" className="menu-content collapse out">
+            <li>
+              <Link to="/dashboard">
+                <i className="fa fa-dashboard fa-lg"></i> Dashboard
+              </Link>
+            </li>
+
+            <li data-toggle="collapse" data-target="#new" className="collapsed">
+              <Link to="#">
+                <i className="fa fa-car fa-lg"></i> Request{" "}
+                <span className="arrow"></span>
+              </Link>
+            </li>
+            <ul className="sub-menu collapse" id="new">
+              <li>
+                <Link to="/request">Requests</Link>
+              </li>
+              <li>
+                <Link to="/addRequest">Add Requests</Link>
+              </li>
+            </ul>
+
+            <li data-toggle="collapse" data-target="#new" className="collapsed">
+              <Link to="#">
+                <i className="fa fa-car fa-lg"></i> Power{" "}
+                <span className="arrow"></span>
+              </Link>
+            </li>
+            <ul className="sub-menu collapse" id="new">
+              <li>
+                <Link onClick={logout} to="/login">
+                  Logout
+                </Link>
+              </li>
             </ul>
           </ul>
         </div>
@@ -159,7 +225,19 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }, props) => {
     </Fragment>
   );
 
-  return <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>;
+  return (
+    <Fragment>
+      {!loading && (
+        <div>
+          {isAuthenticated && role === "admin"
+            ? authLinks
+            : isAuthenticated && role === "user"
+            ? userAuthLinks
+            : guestLinks}
+        </div>
+      )}
+    </Fragment>
+  );
 };
 
 Navbar.propTypes = {

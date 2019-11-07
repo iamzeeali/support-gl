@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const companySchema = new mongoose.Schema({
-  name: {
+  companyName: {
     type: String,
     required: [true, "Please enter company name!"],
     unique: true
@@ -30,7 +30,8 @@ const companySchema = new mongoose.Schema({
     type: String,
     unique: [true, "This email already Exists"],
     lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"]
+    validate: [validator.isEmail, "Please provide a valid email"],
+    required: false
   },
   contactPerson: {
     type: String
@@ -42,7 +43,8 @@ const companySchema = new mongoose.Schema({
     type: String,
     unique: [true, "This email already Exists"],
     lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"]
+
+    required: false
   },
   photo: String,
   active: {

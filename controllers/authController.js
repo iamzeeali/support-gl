@@ -16,21 +16,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     company: req.body.company
   });
 
-  const payload = {
-    user: {
-      id: user.id
-    }
-  };
+  res.json({ user });
 
-  jwt.sign(
-    payload,
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN },
-    (err, token) => {
-      if (err) throw err;
-      res.json({ token });
-    }
-  );
   next();
 });
 
@@ -63,23 +50,13 @@ exports.login = catchAsync(async (req, res, next) => {
     { expiresIn: process.env.JWT_EXPIRES_IN },
     (err, token) => {
       if (err) throw err;
-      res.json({
-        status: "success",
-        token: "Bearer " + token,
-        data: user
-      });
+      res.json({ token });
     }
   );
 });
 
 exports.protect = catchAsync(async function(req, res, next) {
-  let token;
-  if (
-    req.header("Authorization") &&
-    req.header("Authorization").startsWith("Bearer")
-  ) {
-    token = req.header("Authorization").split(" ")[1];
-  }
+  const token = req.header("Authorization");
 
   if (!token) {
     return next(

@@ -15,7 +15,7 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
     <ul>  
       <li>Name: ${name}</li>
       <li>Email: ${email}</li>
-      <li>Company: ${req.user.company.name}</li>
+      <li>Company: ${req.user.company.companyName}</li>
     </ul>
     <h3><u>Requested Activity:</u></h3>
     <p>${activity}</p>
@@ -29,7 +29,7 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
   <ul>  
     <li>Name: ${name}</li>
     <li>Email: ${email}</li>
-    <li>Company: ${req.user.company.name}</li>
+    <li>Company: ${req.user.company.companyName}</li>
   </ul>
   <h3><u>Requested Activity:</u></h3>
   <p>${activity}</p>
@@ -45,7 +45,7 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
       activity,
       subActivity,
       name: req.user.name,
-      company: req.user.company.name,
+      company: req.user.company.companyName,
       email: req.user.email,
       user: req.user.id
     });
@@ -54,13 +54,13 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
     await sendEmail({
       to: maillist,
       bcc: "mdzeeshanali93@gmail.com",
-      subject: `New Activity- ${req.user.company.name}`,
+      subject: `New Activity- ${req.user.company.companyName}`,
       output: receiverOutput
     });
     await sendEmail({
       to: email,
       bcc: "mdzeeshanali93@gmail.com",
-      subject: `Globus Labs support for- ${req.user.company.name}`,
+      subject: `Globus Labs support for- ${req.user.company.companyName}`,
       output: senderOutput
     });
     res.status(200).json({
@@ -69,6 +69,7 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
       message: "Email sent successfully!"
     });
   } catch (err) {
+    console.log(err);
     return next(
       new AppError("There was an error sending email. Try again later!"),
       500

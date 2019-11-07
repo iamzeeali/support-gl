@@ -4,9 +4,16 @@ import { Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 //Components
 import Dashboard from "../dashboard/Dashboard";
+
 import Activity from "../activity/Activity";
 import AddActivity from "../activity/AddActivity";
 import EditActivity from "../activity/EditActivity";
+
+import Company from "../company/Company";
+import AddCompany from "../company/AddCompany";
+import EditCompany from "../company/EditCompany";
+
+import AddRequest from "../request/AddRequest";
 
 const Routes = () => {
   return (
@@ -20,6 +27,11 @@ const Routes = () => {
           path={`/editActivity/:id`}
           component={EditActivity}
         />
+        <PrivateRoute exact path="/company" component={Company} />
+        <PrivateRoute exact path="/addCompany" component={AddCompany} />
+        <PrivateRoute exact path={`/editCompany/:id`} component={EditCompany} />
+
+        <PrivateRoute exact path={"/addRequest"} component={AddRequest} />
       </Switch>
     </section>
   );

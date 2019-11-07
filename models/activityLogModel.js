@@ -13,6 +13,10 @@ const activityLogSchema = new mongoose.Schema({
     type: String,
     required: [true, "You must enter a sub activity"]
   },
+  openStatus: {
+    type: Boolean,
+    default: true
+  },
   active: {
     type: Boolean,
     default: true,

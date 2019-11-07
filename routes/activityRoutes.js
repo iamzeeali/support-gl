@@ -8,13 +8,15 @@ const router = express.Router();
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("admin"));
+router.use(authController.restrictTo("admin", "user"));
 
 router
   .route("/")
   .get(activityController.getAllActivities)
   .post(activityController.createActivity);
 
+//Restrict all router after this middleware to admin only
+router.use(authController.restrictTo("admin"));
 router
   .route("/:id")
   .get(activityController.getActivity)

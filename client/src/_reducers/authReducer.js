@@ -11,8 +11,9 @@ import {
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
+  role: null,
   loading: true,
-  user: {}
+  user: null
 };
 
 export default function(state = initialState, action) {
@@ -24,11 +25,12 @@ export default function(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload
+        user: payload.data,
+        role: payload.data.role
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", "Bearer" + payload.token);
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
         ...payload,
