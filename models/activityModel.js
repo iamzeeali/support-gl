@@ -18,6 +18,10 @@ const activitySchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     select: false
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

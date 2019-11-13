@@ -31,6 +31,12 @@ const Company = ({
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
+        <Link to="/" className="float-right">
+          <i
+            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
+            aria-hidden="true"
+          ></i>
+        </Link>
         <Link to="/addCompany" className="btn btn-primary">
           Add Company
         </Link>

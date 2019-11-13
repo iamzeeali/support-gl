@@ -1,16 +1,7 @@
 import axios from "axios";
 import { setAlert } from "./alertAction";
 import setAuthToken from "../utils/setAuthToken";
-import {
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT,
-  AUTH_ERROR,
-  CLEAR_USER,
-  CLEAR_ACTIVITY,
-  CLEAR_COMPANY
-} from "./types";
+import * as types from "./types";
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -21,12 +12,53 @@ export const loadUser = () => async dispatch => {
   try {
     const res = await axios.get("/api/user/me");
     dispatch({
-      type: USER_LOADED,
+      type: types.USER_LOADED,
       payload: res.data
     });
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR
+      type: types.AUTH_ERROR
+    });
+  }
+};
+
+// Load User
+export const getUsers = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/user/");
+    console.log(res.data);
+    dispatch({
+      type: types.GET_USERS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: types.AUTH_ERROR
+    });
+  }
+};
+
+// Add User
+export const addUser = (formData, history) => async dispatch => {
+  try {
+    const res = await axios.post("/api/user/signup", formData);
+
+    dispatch({
+      type: types.REGISTER_SUCCESS,
+      payload: res.data
+    });
+
+    history.push("/user");
+  } catch (err) {
+    const errors = err.response.data;
+    if (errors && errors.error.code === 11000) {
+      dispatch(setAlert("User Already Exists!", "danger"));
+    } else if (errors) {
+      dispatch(setAlert(errors.message, "danger"));
+    }
+
+    dispatch({
+      type: types.REGISTER_FAIL
     });
   }
 };
@@ -44,7 +76,7 @@ export const login = (email, password) => async dispatch => {
   try {
     const res = await axios.post("/api/user/login", body, config);
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: types.LOGIN_SUCCESS,
       payload: res.data
     });
     dispatch(loadUser());
@@ -55,15 +87,15 @@ export const login = (email, password) => async dispatch => {
     }
 
     dispatch({
-      type: LOGIN_FAIL
+      type: types.LOGIN_FAIL
     });
   }
 };
 
 // Logout / Clear Profile
 export const logout = () => dispatch => {
-  dispatch({ type: CLEAR_USER });
-  dispatch({ type: CLEAR_ACTIVITY });
-  dispatch({ type: CLEAR_COMPANY });
-  dispatch({ type: LOGOUT });
+  dispatch({ type: types.CLEAR_USER });
+  dispatch({ type: types.CLEAR_ACTIVITY });
+  dispatch({ type: types.CLEAR_COMPANY });
+  dispatch({ type: types.LOGOUT });
 };

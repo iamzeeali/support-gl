@@ -3,6 +3,7 @@ import * as types from "../_actions/types";
 const initialState = {
   activity: null,
   activities: [],
+  subActivities: [],
   error: {},
   filtered: null,
   loading: true
@@ -22,6 +23,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         activities: payload,
+        loading: false
+      };
+    case types.POPULATE_SUBACTIVITIES:
+      console.log(state.activities);
+      return {
+        ...state,
+        subActivities: state.activities.find(
+          activity => activity.activityName === payload
+        ).subActivities,
         loading: false
       };
     case types.ADD_ACTIVITY:

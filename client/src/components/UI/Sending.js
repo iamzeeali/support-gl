@@ -6,7 +6,7 @@ export default () => (
     <img
       src={sending}
       style={{
-        width: "200px",
+        width: "400px",
         margin: "auto",
         display: "block",
         textAlign: "center"

@@ -11,6 +11,7 @@ import setAuthToken from "./utils/setAuthToken";
 import Navbar from "./components/UI/Navbar";
 import Alert from "./components/UI/Alert";
 import Landing from "./components/UI/Landing";
+import About from "./components/UI/About";
 import Login from "./components/Login";
 import Routes from "./components/routing/Routes";
 
@@ -31,6 +32,7 @@ const App = () => {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/about" component={About} />
             <Route component={Routes} />
           </Switch>
         </Fragment>

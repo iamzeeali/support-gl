@@ -25,6 +25,12 @@ const AddActivity = ({ addActivity, history }) => {
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
+        <Link to="/" className="float-right">
+          <i
+            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
+            aria-hidden="true"
+          ></i>
+        </Link>
         <Link to="/activity" className="btn btn-primary">
           <i className="fa fa-arrow-left"> </i> Go Back
         </Link>

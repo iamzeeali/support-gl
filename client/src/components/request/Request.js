@@ -3,18 +3,18 @@ import { withRouter } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import AdminDashboard from "./AdminDashboard";
-import UserDashboard from "./UserDashboard";
+import AdminRequest from "./AdminRequest";
+import UserRequest from "./UserRequest";
 
-const Dashboard = ({ auth: { isAuthenticated, loading, role } }) => {
+const Request = ({ auth: { isAuthenticated, loading, role } }) => {
   return (
     <Fragment>
       {!loading && (
         <Fragment>
           {isAuthenticated && role === "admin" ? (
-            <AdminDashboard />
+            <AdminRequest />
           ) : (
-            <UserDashboard />
+            <UserRequest />
           )}
         </Fragment>
       )}
@@ -22,7 +22,7 @@ const Dashboard = ({ auth: { isAuthenticated, loading, role } }) => {
   );
 };
 
-Dashboard.propTypes = {
+Request.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -30,4 +30,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(withRouter(Dashboard));
+export default connect(mapStateToProps)(withRouter(Request));

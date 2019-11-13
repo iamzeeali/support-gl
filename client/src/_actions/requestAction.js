@@ -19,10 +19,26 @@ export const getCurrentRequest = id => async dispatch => {
   }
 };
 
-//Get all Requests
+//Get user's Requests
 export const getRequests = () => async dispatch => {
   try {
     const res = await axios.get("/api/activityLog");
+    dispatch({
+      type: types.GET_REQUESTS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: types.REQUEST_ERROR,
+      payload: { status: err.response }
+    });
+  }
+};
+
+//Get all Requests
+export const getAllRequests = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/activityLog/all");
     dispatch({
       type: types.GET_REQUESTS,
       payload: res.data.data
@@ -39,13 +55,18 @@ export const getRequests = () => async dispatch => {
 export const addRequest = (formData, history) => async dispatch => {
   console.log(formData);
   try {
+    dispatch({
+      type: types.ADD_REQUEST,
+      sendingPayload: true
+    });
     const res = await axios.post("/api/activityLog", formData);
     dispatch({
       type: types.ADD_REQUEST,
-      payload: res.data
+      payload: res.data,
+      sendingPayload: false
     });
 
-    dispatch(setAlert("Request Created", "success"));
+    dispatch(setAlert("Request Sent!", "success"));
 
     history.push("/request");
   } catch (err) {
@@ -62,8 +83,102 @@ export const addRequest = (formData, history) => async dispatch => {
   }
 };
 
+//Get user's company emails
+export const getEmails = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/email");
+    dispatch({
+      type: types.GET_EMAILS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: types.REQUEST_ERROR,
+      payload: { status: err.response }
+    });
+  }
+};
+
+//Get all emails
+export const getAllEmails = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/email/all");
+    dispatch({
+      type: types.GET_EMAILS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: types.REQUEST_ERROR,
+      payload: { status: err.response }
+    });
+  }
+};
+
+// Add Email
+export const addEmail = (formData, history) => async dispatch => {
+  console.log(formData);
+  try {
+    const res = await axios.post("/api/email", formData);
+    dispatch({
+      type: types.ADD_EMAIL,
+      payload: res.data,
+      sendingPayload: false
+    });
+    dispatch(addRequest(formData, history));
+  } catch (err) {
+    const errors = err.response.data.errors.email;
+    console.log(errors);
+
+    if (errors) {
+      dispatch(
+        setAlert(errors.message ? "Email already Exists!" : errors, "danger")
+      );
+    }
+
+    dispatch({
+      type: types.REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Delete Email (update active to false)
+export const deleteEmail = (formData, id, history) => async dispatch => {
+  if (window.confirm("Are you sure?")) {
+    // alert(formData.active)
+
+    try {
+      let activeOb = {
+        active: formData.active
+      };
+      const res = await axios.patch(`/api/email/${id}`, activeOb);
+      dispatch({
+        type: types.ADD_EMAIL,
+        payload: res.data,
+        sendingPayload: false
+      });
+      dispatch(addRequest(formData, history));
+    } catch (err) {
+      const errors = err.response.data.errors.email;
+
+      if (errors) {
+        dispatch(
+          setAlert(errors.message ? "Email already Exists!" : errors, "danger")
+        );
+      }
+
+      dispatch({
+        type: types.REQUEST_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
+  }
+};
+
 // Edit Request
 export const editRequest = (formData, history, id) => async dispatch => {
+  console.log(formData);
   try {
     const config = {
       headers: {
@@ -79,6 +194,7 @@ export const editRequest = (formData, history, id) => async dispatch => {
     });
 
     dispatch(setAlert("Request Updated", "success"));
+    dispatch({ type: types.CLEAR_REQUEST });
 
     history.push("/request");
   } catch (err) {
@@ -115,6 +231,7 @@ export const deleteRequest = id => async dispatch => {
 
 //Set Current Request
 export const setCurrentRequest = request => async dispatch => {
+  console.log(request);
   dispatch({
     type: types.SET_CURRENT_REQUEST,
     payload: request

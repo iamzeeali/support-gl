@@ -26,45 +26,60 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <div className="login">
-      <div className="row">
-        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div className="card card-signin my-5">
-            <div className="card-body">
-              <h5 className="card-title text-center">Log In</h5>
-              <form className="form-signin" onSubmit={e => onSubmit(e)}>
-                <div className="form-label-group">
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Email address"
-                    name="email"
-                    value={email}
-                    onChange={e => onChange(e)}
-                    required
-                    autoFocus
-                  />
-                </div>
+      <div className="dark-overlay">
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">
+                  Globus Labs Support Portal
+                </h5>
+                <form className="form-signin" onSubmit={e => onSubmit(e)}>
+                  <div className="form-label-group">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Email address"
+                      name="email"
+                      value={email}
+                      onChange={e => onChange(e)}
+                      required
+                      autoFocus
+                    />
+                  </div>
 
-                <div className="form-label-group">
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Password"
-                    name="password"
-                    value={password}
-                    onChange={e => onChange(e)}
-                    required
-                  />
-                </div>
+                  <div className="form-label-group">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password"
+                      name="password"
+                      value={password}
+                      onChange={e => onChange(e)}
+                      required
+                    />
+                  </div>
 
-                <button
-                  className="btn btn-lg btn-primary btn-block text-uppercase"
-                  type="submit"
-                >
-                  Sign in
-                </button>
-                <hr className="my-4" />
-              </form>
+                  <button
+                    className="btn btn-lg btn-primary btn-block text-uppercase"
+                    type="submit"
+                  >
+                    Log in
+                  </button>
+                  <hr className="my-4" />
+
+                  <small className="text-center ml-auto">
+                    Powered by{" "}
+                    <a
+                      href="http://globuslabs.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Globus Labs
+                    </a>
+                  </small>
+                </form>
+              </div>
             </div>
           </div>
         </div>

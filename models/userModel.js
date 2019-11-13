@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not the same!"
     }
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
@@ -110,8 +114,7 @@ userSchema.methods.createPasswordResetToken = function() {
 userSchema.pre(/^find/, function(next) {
   this.populate({
     path: "company",
-    select:
-      "-shortName -country -state -city -companyEmail -companyPhone -contactPerson -contactPersonPhone -contactPersonEmail -__v"
+    select: "companyName"
   });
 
   next();

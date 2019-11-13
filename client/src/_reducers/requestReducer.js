@@ -3,19 +3,22 @@ import * as types from "../_actions/types";
 const initialState = {
   request: null,
   requests: [],
+  emails: [],
   error: {},
   filtered: null,
-  loading: true
+  loading: true,
+  sendingLoader: false,
+  open: null
 };
 
 export default function(state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload, sendingPayload } = action;
 
   switch (type) {
     case types.GET_REQUEST:
       return {
         ...state,
-        request: payload,
+        request: payload.data,
         loading: false
       };
     case types.GET_REQUESTS:
@@ -28,18 +31,25 @@ export default function(state = initialState, action) {
       return {
         ...state,
         request: payload,
-        loading: false
+        sendingLoader: sendingPayload
       };
     case types.SET_CURRENT_REQUEST:
       return {
         ...state,
-        request: action.payload
+        request: action.payload,
+        open: action.payload.openStatus
       };
     case types.CLEAR_REQUEST:
       return {
         ...state,
         request: null,
         requests: [],
+        loading: false
+      };
+    case types.GET_EMAILS:
+      return {
+        ...state,
+        emails: payload,
         loading: false
       };
 

@@ -11,9 +11,10 @@ router.use(authController.restrictTo("admin", "user"));
 
 router
   .route("/")
-  .get(activityLogController.getAllActivityLogs)
+  .get(activityLogController.getActivityLogs)
   .post(activityLogController.createActivityLog);
 
+router.route("/all").get(activityLogController.getAllActivityLogs);
 router
   .route("/:id")
   .get(activityLogController.getActivityLog)

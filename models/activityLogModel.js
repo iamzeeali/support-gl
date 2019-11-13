@@ -13,14 +13,18 @@ const activityLogSchema = new mongoose.Schema({
     type: String,
     required: [true, "You must enter a sub activity"]
   },
+  operateEmail: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  description: {
+    type: String
+  },
   openStatus: {
     type: Boolean,
     default: true
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false
   },
   date: {
     type: Date,

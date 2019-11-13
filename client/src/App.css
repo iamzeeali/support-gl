@@ -16,13 +16,6 @@
   text-align: center;
 }
 
-@media screen and (min-width: 768px) {
-  .container {
-    margin-left: 20% !important;
-    padding-top: 20px;
-  }
-}
-
 .App-logo {
   height: 40vmin;
 }
@@ -171,7 +164,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 10 !important;
+    /* z-index: 10 !important; */
     padding: 3px;
     background-color: #ffffff;
     color: #000;
@@ -261,7 +254,7 @@ body {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 10 !important;
+    /* z-index: 10 !important; */
     padding: 3px;
     background-color: #ffffff;
     color: #000;
@@ -335,7 +328,7 @@ body {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 10 !important;
+    /* z-index: 10 !important; */
     padding: 3px;
     background-color: #ffffff;
     color: #000;
@@ -353,8 +346,8 @@ body {
 .login {
   margin: 0px !important;
   padding: 0px !important;
-  background: #007bff;
-  background: linear-gradient(to right, #0062e6, #33aeff);
+  position: relative;
+  background: url("./img/landing.jpg") no-repeat center center/cover;
   height: 100vh;
 }
 
@@ -380,7 +373,7 @@ body {
 
 .form-signin .btn {
   font-size: 80%;
-  border-radius: 5rem;
+  /* border-radius: 5rem; */
   letter-spacing: 0.1rem;
   font-weight: bold;
   padding: 1rem;
@@ -394,7 +387,7 @@ body {
 
 .form-label-group input {
   height: auto;
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
 }
 
 .form-label-group > input,
@@ -483,6 +476,7 @@ body {
   }
 }
 
+/***************************************************Overlay/Alert*****************************
 /* Overlay */
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.7);
@@ -579,4 +573,85 @@ h2:hover {
 .request-meu-item i {
   font-size: 60px;
   padding: 20px 0;
+}
+
+
+/*************************************SWITCH
+
+
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  float:right;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input.default:checked + .slider {
+  background-color: #444;
+}
+input.primary:checked + .slider {
+  background-color: #2196F3;
+}
+input.success:checked + .slider {
+  background-color: #8bc34a;
+}
+input.info:checked + .slider {
+  background-color: #3de0f5;
+}
+input.warning:checked + .slider {
+  background-color: #FFC107;
+}
+input.danger:checked + .slider {
+  background-color: #f44336;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

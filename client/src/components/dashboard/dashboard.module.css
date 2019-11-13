@@ -1,0 +1,40 @@
+.dashboard {
+}
+
+.dashboardMenu {
+  padding: 20px;
+}
+.dashboardMenu .dashboardItem {
+  margin: 0 10px;
+  width: 100% !important;
+  height: auto;
+  padding: 20px;
+  /* background-color: #e3a700; */
+  color: #fff !important;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(226, 219, 219, 0.2);
+  transition: 0.3s;
+}
+
+.dashboardMenu .dashboardItem i {
+  color: #fff;
+}
+
+.dashboardMenu .dashboardItem h1 {
+  padding: 10px 0;
+  color: #e3a700;
+}
+
+.dashboardMenu .dashboardItem h1:hover {
+  color: #000 !important;
+  transition: 0.5s;
+}
+.dashboardMenu .dashboardItem:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  color: #ccc !important;
+}
+
+.menu {
+  margin-top: 50px;
+}

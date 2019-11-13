@@ -2,26 +2,47 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Sending from "../UI/Sending";
 import { addRequest } from "../../_actions/requestAction";
-import { getActivities } from "../../_actions/activityAction";
+import {
+  getActivities,
+  populateSubActivities
+} from "../../_actions/activityAction";
 
 const AddRequest = ({
-  auth: { user },
+  auth: { username },
   addRequest,
   getActivities,
+  sendingLoader,
+  populateSubActivities,
   activities,
+  subActivities,
   history
 }) => {
   useEffect(() => {
     getActivities();
     //eslint-diable-next-line
   }, [getActivities]);
+
   const [formData, setFormData] = useState({
     activity: "",
-    subActivity: ""
+    subActivity: "",
+    description: ""
   });
 
-  const { activity, subActivity } = formData;
+  const [selectData, setSelectData] = useState({
+    selectedValue: ""
+  });
+
+  const { activity, subActivity, description } = formData;
+  const { selectedValue } = selectData;
+
+  const onChangeSelect = e => {
+    e.preventDefault();
+    setSelectData({ ...selectData, selectedValue: e.target.value });
+    populateSubActivities(e.target.value);
+    setFormData({ ...formData, activity: e.target.value });
+  };
 
   const onChangeHandler = e => {
     e.preventDefault();
@@ -33,21 +54,106 @@ const AddRequest = ({
     addRequest(formData, history);
   };
 
+  const onCloseModal = () => {
+    setSelectData({ ...selectData, selectedValue: "" });
+  };
+
   let activityOptions = activities.map(activity => (
     <option key={activity._id} value={activity.activityName}>
       {activity.activityName}
     </option>
   ));
 
-  let subActivityOptions = activities.map(activity => (
-    <option key={activity._id} value={activity.subActivities}>
-      {activity.subActivities}
-    </option>
+  let subActivityOptions = subActivities.map(subAct => (
+    <option value={subAct}>{subAct}</option>
   ));
+
+  const modal = (
+    <div
+      class="modal d-block animated fadeIn bg-light"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+      id="myModal"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">What do you want to do?</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              onClick={onCloseModal}
+            >
+              &times;
+            </button>
+          </div>
+
+          <div class="modal-body text-center">
+            <div className="row ml-4">
+              <div className="col-sm-3 border-light bg-primary text-light m-2 text-center">
+                <i class="fa fa-envelope text-light" aria-hidden="true">
+                  {" "}
+                </i>
+                <br />
+                <small>
+                  {" "}
+                  <Link to="/addEmail" className="text-light">
+                    {" "}
+                    Create New Email
+                  </Link>
+                </small>
+              </div>
+              <div className="col-sm-3 border-light bg-primary text-light m-2 text-center">
+                <i class="fa fa-trash text-light" aria-hidden="true">
+                  {" "}
+                </i>
+                <br />
+
+                <small>
+                  <Link to="/deleteEmail" className="text-light">
+                    {" "}
+                    Delete Email
+                  </Link>
+                </small>
+              </div>
+              <div className="col-sm-3 border-light bg-primary text-light m-2 text-center">
+                <i class="fa fa-lock text-light" aria-hidden="true">
+                  {" "}
+                </i>
+                <br />
+
+                <small>
+                  <Link to="/changePassword" className="text-light">
+                    {" "}
+                    Change Password
+                  </Link>
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onClick={onCloseModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
+        <Link to="/" className="float-right">
+          <i
+            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
+            aria-hidden="true"
+          ></i>
+        </Link>
         <Link to="/request" className="btn btn-primary">
           <i className="fa fa-arrow-left"> </i> Go Back
         </Link>
@@ -55,66 +161,89 @@ const AddRequest = ({
         <small className="lead">Add new Request...</small>
       </div>
 
-      <div className="animated fadeIn">
-        <div className="row">
-          <div className="col-sm-9 col-md-9 col-lg-9 mx-auto">
-            <div className="card my-5">
-              <div className="card-body">
-                <form
-                  className="form-signin"
-                  onSubmit={e => onSubmitHandler(e)}
-                >
-                  <div className="form-label-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="User"
-                      value={user.name}
-                      required
-                      disabled
-                    />
-                  </div>
-
-                  <div className="form-label-group">
-                    <select
-                      className="form-control"
-                      name="activity"
-                      value={activity}
-                      defaultValue={{ label: "Select activity", value: 0 }}
-                      onChange={e => onChangeHandler(e)}
-                    >
-                      <option>Select Activity</option>
-                      {activityOptions}
-                    </select>
-                  </div>
-
-                  <div className="form-label-group">
-                    <select
-                      className="form-control"
-                      name="subActivity"
-                      value={subActivity}
-                      defaultValue={{ label: "Select sub Activity", value: 0 }}
-                      onChange={e => onChangeHandler(e)}
-                    >
-                      <option>Select Sub Activity</option>
-                      {subActivityOptions}
-                    </select>
-                  </div>
-
-                  <hr className="my-4" />
-
-                  <button
-                    className="btn btn-lg btn-primary btn-block text-uppercase"
-                    type="submit"
+      {sendingLoader ? (
+        <Sending />
+      ) : (
+        <div className="animated fadeIn">
+          <div className="row">
+            <div className="col-sm-9 col-md-9 col-lg-9 mx-auto">
+              <div className="card my-5">
+                <div className="card-body">
+                  <form
+                    className="form-signin"
+                    onSubmit={e => onSubmitHandler(e)}
                   >
-                    Submit
-                  </button>
-                </form>
+                    <div className="form-label-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="User"
+                        value={username}
+                        required
+                        disabled
+                      />
+                    </div>
+
+                    <div className="form-label-group">
+                      <select
+                        className="form-control"
+                        value={activity}
+                        onChange={e => onChangeSelect(e)}
+                      >
+                        <option className="text-muted">
+                          -Select Activity-
+                        </option>
+
+                        {activityOptions}
+                      </select>
+                    </div>
+
+                    <div className="form-label-group">
+                      <select
+                        className="form-control"
+                        name="subActivity"
+                        value={subActivity}
+                        defaultValue={{
+                          label: "Select sub Activity",
+                          value: 0
+                        }}
+                        onChange={e => onChangeHandler(e)}
+                      >
+                        <option className="text-muted">
+                          -Select Sub Activity-
+                        </option>
+                        {subActivityOptions}
+                      </select>
+                    </div>
+
+                    {selectedValue === "Email" ? modal : null}
+
+                    <div className="form-label-group">
+                      <textarea
+                        type="text"
+                        className="form-control"
+                        placeholder="Description (optional)"
+                        value={description}
+                        name="description"
+                        onChange={e => onChangeHandler(e)}
+                      />
+                    </div>
+
+                    <hr className="my-4" />
+
+                    <button
+                      className="btn btn-lg btn-primary btn-block text-uppercase"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Fragment>
   );
 };
@@ -122,15 +251,18 @@ const AddRequest = ({
 AddRequest.propTypes = {
   getActivities: PropTypes.func.isRequired,
   addRequest: PropTypes.func.isRequired,
+  populateSubActivities: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   activities: state.activity.activities,
+  subActivities: state.activity.subActivities,
+  sendingLoader: state.request.sendingLoader,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { addRequest, getActivities }
+  { addRequest, getActivities, populateSubActivities }
 )(withRouter(AddRequest));

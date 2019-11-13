@@ -28,7 +28,6 @@ const companySchema = new mongoose.Schema({
   },
   companyEmail: {
     type: String,
-    unique: [true, "This email already Exists"],
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
     required: false
@@ -51,6 +50,10 @@ const companySchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     select: false
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

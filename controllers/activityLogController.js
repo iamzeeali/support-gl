@@ -6,8 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
 exports.createActivityLog = catchAsync(async (req, res, next) => {
-  console.log(req.user);
-  const { activity, subActivity } = req.body;
+  const { activity, subActivity, operateEmail } = req.body;
   const { name, email } = req.user;
 
   const receiverOutput = `
@@ -21,6 +20,7 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
     <p>${activity}</p>
   <ul>
     <li>${subActivity}</li>
+    <li>${operateEmail}</li>
   </ul>`;
 
   const senderOutput = `
@@ -35,18 +35,19 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
   <p>${activity}</p>
   <ul>
     <li>${subActivity}</li>
+    <li>${operateEmail}</li>
   </ul>`;
 
   try {
     // const doc = await ActivityLog.create(req.body);
     let maillist = ["zeeshan@globuslabs.com"];
-    console.log(req.user);
     const newActivityLog = new ActivityLog({
       activity,
       subActivity,
       name: req.user.name,
       company: req.user.company.companyName,
       email: req.user.email,
+      operateEmail,
       user: req.user.id
     });
     const doc = await newActivityLog.save();
@@ -76,7 +77,38 @@ exports.createActivityLog = catchAsync(async (req, res, next) => {
     );
   }
 });
-exports.getAllActivityLogs = factory.getAll(ActivityLog);
+
+//Get user's logs only
+
+exports.getActivityLogs = catchAsync(async (req, res, next) => {
+  //to allow for nested getReviews on tour (small hack)
+
+  const docs = await ActivityLog.find({ user: req.user.id }).sort({
+    date: -1
+  });
+
+  res.status(200).json({
+    status: "success",
+    result: docs.length,
+    data: docs
+  });
+});
+
+//Get all logs for admin
+exports.getAllActivityLogs = catchAsync(async (req, res, next) => {
+  //to allow for nested getReviews on tour (small hack)
+
+  const docs = await ActivityLog.find().sort({
+    date: -1
+  });
+
+  res.status(200).json({
+    status: "success",
+    result: docs.length,
+    data: docs
+  });
+});
+
 exports.getActivityLog = factory.getOne(ActivityLog);
 exports.updateActivityLog = factory.updateOne(ActivityLog);
 exports.deleteActivityLog = factory.deleteOne(ActivityLog);

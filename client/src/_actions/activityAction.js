@@ -36,6 +36,21 @@ export const getActivities = () => async dispatch => {
   }
 };
 
+export const populateSubActivities = activity => async dispatch => {
+  console.log(activity);
+  try {
+    dispatch({
+      type: types.POPULATE_SUBACTIVITIES,
+      payload: activity
+    });
+  } catch (err) {
+    dispatch({
+      type: types.ACTIVITY_ERROR,
+      payload: { status: err.response }
+    });
+  }
+};
+
 // Add Activity
 export const addActivity = (formData, history) => async dispatch => {
   try {

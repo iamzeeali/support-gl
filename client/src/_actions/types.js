@@ -1,6 +1,7 @@
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const USER_LOADED = "USER_LOADED";
+export const GET_USERS = "GET_USERS";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
@@ -21,6 +22,7 @@ export const CLEAR_ACTIVITY = "CLEAR_ACTIVITY";
 export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
 export const ACTIVITY_ERROR = "ACTIVITY_ERROR";
 export const FILTER_ACTIVITY = "FILTER_ACTIVITY";
+export const POPULATE_SUBACTIVITIES = "POPULATE_SUBACTIVITIES";
 
 export const GET_COMPANY = "GET_COMPANY";
 export const GET_COMPANIES = "GET_COMPANIES";
@@ -35,6 +37,8 @@ export const FILTER_COMPANY = "FILTER_COMPANY";
 export const GET_REQUEST = "GET_REQUEST";
 export const GET_REQUESTS = "GET_REQUESTS";
 export const ADD_REQUEST = "ADD_REQUEST";
+export const GET_EMAILS = "GET_EMAILS";
+export const ADD_EMAIL = "ADD_EMAIL";
 export const UPDATE_REQUEST = "UPDATE_REQUEST";
 export const SET_CURRENT_REQUEST = "SET_CURRENT_REQUEST";
 export const CLEAR_REQUEST = "CLEAR_REQUEST";
