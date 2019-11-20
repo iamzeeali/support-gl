@@ -124,6 +124,7 @@ const ChangePassword = ({
                         value={operateEmail}
                         name="operateEmail"
                         onChange={e => onChangeHandler(e)}
+                        required
                       >
                         <option className="text-muted">-Select Email-</option>
                         {emails.map(email => (

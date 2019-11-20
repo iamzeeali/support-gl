@@ -125,7 +125,6 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
                       />
                     </div>
 
-                    <label>Priority:</label>
                     <div className="form-label-group">
                       <select
                         className="form-control"

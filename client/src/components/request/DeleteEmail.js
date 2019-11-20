@@ -125,6 +125,7 @@ const DeleteEmail = ({
                         value={operateEmail}
                         name="operateEmail"
                         onChange={e => onChangeHandler(e)}
+                        required
                       >
                         <option className="text-muted">-Select Email-</option>
                         {emails.map(email => (
@@ -136,7 +137,6 @@ const DeleteEmail = ({
                       </select>
                     </div>
 
-                    <label>Priority:</label>
                     <div className="form-label-group">
                       <select
                         className="form-control"
