@@ -47,7 +47,7 @@ const MyReport = ({
     });
 
     //eslint-diable-next-line
-  }, [chartData, openStatusCount, requests.result, thirtyDaysRequestsCount]);
+  }, []);
 
   const { PieChartData, barChartData } = chartData;
 

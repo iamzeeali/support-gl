@@ -52,12 +52,7 @@ const CompanyReport = ({
     });
 
     //eslint-diable-next-line
-  }, [
-    chartData,
-    companyOpenStatusCount,
-    companyRequests.result,
-    companyThirtyDaysRequestsCount
-  ]);
+  }, []);
 
   const { PieChartData, barChartData } = chartData;
 
