@@ -127,6 +127,9 @@ const DeleteEmail = ({
                         onChange={e => onChangeHandler(e)}
                         required
                       >
+                        <option value="" disabled selected hidden>
+                          Select Email
+                        </option>
                         <option className="text-muted">-Select Email-</option>
                         {emails.map(email => (
                           <option key={email._id} value={email._id}>
