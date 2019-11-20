@@ -200,7 +200,6 @@ export const getAllRequests = () => async dispatch => {
 
 // Add Request
 export const addRequest = (formData, history) => async dispatch => {
-  console.log(formData);
   try {
     dispatch({
       type: types.ADD_REQUEST,
@@ -297,7 +296,6 @@ export const addEmail = (formData, history) => async dispatch => {
 
 // Suspend Email (update active to false)
 export const deleteEmail = (formData, id, history) => async dispatch => {
-  console.log(formData);
   if (window.confirm("Are you sure?")) {
     try {
       let activeOb = {
@@ -335,7 +333,6 @@ export const deleteEmail = (formData, id, history) => async dispatch => {
 
 // Change Passowrd Request
 export const changePassword = (formData, history) => async dispatch => {
-  console.log(formData);
   try {
     dispatch(addRequest(formData, history));
   } catch (err) {
@@ -361,7 +358,6 @@ export const changePassword = (formData, history) => async dispatch => {
 
 // Edit Request
 export const editRequest = (formData, history, id) => async dispatch => {
-  console.log(formData);
   try {
     const config = {
       headers: {
@@ -413,7 +409,6 @@ export const deleteRequest = id => async dispatch => {
 
 //Set Current Request
 export const setCurrentRequest = request => async dispatch => {
-  console.log(request);
   dispatch({
     type: types.SET_CURRENT_REQUEST,
     payload: request
