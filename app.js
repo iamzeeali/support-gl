@@ -16,6 +16,8 @@ const activityRouter = require("./routes/activityRoutes");
 const activityLogRouter = require("./routes/activityLogRoutes");
 const EmailRouter = require("./routes/emailRoutes");
 
+var path = require("path");
+
 const app = express();
 
 const DB = process.env.DATABASE.replace(

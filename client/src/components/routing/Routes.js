@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
 //Components
@@ -32,6 +32,8 @@ import User from "../user/User";
 import AddUser from "../user/AddUser";
 
 import Member from "../member/Member";
+
+import NotFound from "../UI/NotFound";
 
 const Routes = () => {
   return (
@@ -74,6 +76,8 @@ const Routes = () => {
         <PrivateRoute exact path="/companyreport" component={CompanyReport} />
 
         <PrivateRoute exact path="/member" component={Member} />
+
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
