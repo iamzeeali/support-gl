@@ -20,7 +20,7 @@ router
   .get(authController.restrictTo("super-admin"), emailController.getAllEmails);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("super-admin", "user"));
+router.use(authController.restrictTo("super-admin", "user", "admin"));
 router
   .route("/:id")
   .get(emailController.getEmail)
