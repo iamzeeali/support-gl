@@ -3,12 +3,21 @@ import * as types from "../_actions/types";
 const initialState = {
   request: null,
   requests: [],
+  companyRequests: [],
   emails: [],
+  email: null,
   error: {},
   filtered: null,
   loading: true,
+  companyRequestLoading: true,
   sendingLoader: false,
-  open: null
+  open: null,
+  openStatus: null,
+  companyOpenStatus: null,
+  thirtyDaysRequestsCount: null,
+  companyThirtyDaysRequestsCount: null,
+  openStatusCount: null,
+  companyOpenStatusCount: null
 };
 
 export default function(state = initialState, action) {
@@ -27,6 +36,62 @@ export default function(state = initialState, action) {
         requests: payload,
         loading: false
       };
+    case types.GET_OPEN_STATUS_COUNT:
+      return {
+        ...state,
+        openStatusCount: payload.data,
+        loading: false
+      };
+    case types.GET_OPEN_STATUS:
+      return {
+        ...state,
+        requests: payload,
+        loading: false
+      };
+    case types.GET_30_DAYS_REQUESTS:
+      return {
+        ...state,
+        requests: payload,
+        loading: false
+      };
+    case types.GET_30_DAYS_REQUESTS_COUNT:
+      return {
+        ...state,
+        thirtyDaysRequestsCount: payload,
+        loading: false
+      };
+    //*************************COMPANY******************************** */
+    case types.GET_COMPANY_REQUESTS:
+      return {
+        ...state,
+        companyRequests: payload,
+        companyRequestLoading: false
+      };
+    case types.GET_COMPANY_OPEN_STATUS_COUNT:
+      return {
+        ...state,
+        companyOpenStatusCount: payload.data,
+        loading: false
+      };
+    case types.GET_COMPANY_OPEN_STATUS:
+      return {
+        ...state,
+        companyRequests: payload,
+        loading: false
+      };
+    case types.GET_COMPANY_30_DAYS_REQUESTS:
+      return {
+        ...state,
+        companyRequests: payload,
+        loading: false
+      };
+    case types.GET_COMPANY_30_DAYS_REQUESTS_COUNT:
+      return {
+        ...state,
+        companyThirtyDaysRequestsCount: payload,
+        loading: false
+      };
+    //***************************************END COMPANY****************************** */
     case types.ADD_REQUEST:
       return {
         ...state,
@@ -44,12 +109,37 @@ export default function(state = initialState, action) {
         ...state,
         request: null,
         requests: [],
-        loading: false
+        companyRequests: [],
+        emails: [],
+        email: null,
+        error: {},
+        filtered: null,
+        loading: true,
+        sendingLoader: false,
+        open: null,
+        openStatus: null,
+        companyOpenStatus: null,
+        thirtyDaysRequestsCount: null,
+        companyThirtyDaysRequestsCount: null,
+        openStatusCount: null,
+        companyOpenStatusCount: null
       };
     case types.GET_EMAILS:
       return {
         ...state,
         emails: payload,
+        loading: false
+      };
+    case types.ADD_EMAIL:
+      return {
+        ...state,
+        email: payload,
+        loading: false
+      };
+    case types.DELETE_EMAIL:
+      return {
+        ...state,
+        email: payload,
         loading: false
       };
 

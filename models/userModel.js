@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ["user", "admin"],
+    enum: ["user", "admin", "super-admin"],
     default: "user"
   },
   password: {
@@ -113,8 +113,7 @@ userSchema.methods.createPasswordResetToken = function() {
 
 userSchema.pre(/^find/, function(next) {
   this.populate({
-    path: "company",
-    select: "companyName"
+    path: "company"
   });
 
   next();

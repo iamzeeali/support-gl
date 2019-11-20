@@ -22,7 +22,9 @@ const EditCompany = ({
     companyEmail: "",
     contactPerson: "",
     contactPersonPhone: "",
-    contactPersonEmail: ""
+    contactPersonEmail: "",
+    photo: "",
+    description: ""
   });
 
   useEffect(() => {
@@ -47,7 +49,11 @@ const EditCompany = ({
           ? ""
           : company.contactPersonPhone,
       contactPersonEmail:
-        loading || !company.contactPersonEmail ? "" : company.contactPersonEmail
+        loading || !company.contactPersonEmail
+          ? ""
+          : company.contactPersonEmail,
+      photo: loading || !company.photo ? "" : company.photo,
+      description: loading || !company.description ? "" : company.description
     });
     //eslint-disable-next-line
   }, [loading, getCurrentCompany]);
@@ -63,7 +69,9 @@ const EditCompany = ({
     companyEmail,
     contactPerson,
     contactPersonPhone,
-    contactPersonEmail
+    contactPersonEmail,
+    photo,
+    description
   } = formData;
 
   const onChangeHandler = e => {
@@ -73,7 +81,7 @@ const EditCompany = ({
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    editCompany(formData, history);
+    editCompany(formData, match.params.id, history);
   };
 
   return (
@@ -167,7 +175,7 @@ const EditCompany = ({
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Address"
+                      placeholder="Company Address"
                       name="companyAddress"
                       value={companyAddress}
                       onChange={e => onChangeHandler(e)}
@@ -178,7 +186,7 @@ const EditCompany = ({
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Company Phone"
                       name="companyPhone"
                       value={companyPhone}
                       onChange={e => onChangeHandler(e)}
@@ -189,7 +197,7 @@ const EditCompany = ({
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Email"
+                      placeholder="Company Email"
                       name="companyEmail"
                       value={companyEmail}
                       onChange={e => onChangeHandler(e)}
@@ -214,7 +222,7 @@ const EditCompany = ({
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Contact Person Phone"
                       name="contactPersonPhone"
                       value={contactPersonPhone}
                       onChange={e => onChangeHandler(e)}
@@ -225,9 +233,30 @@ const EditCompany = ({
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Email"
+                      placeholder="Contact Person Email"
                       name="contactPersonEmail"
                       value={contactPersonEmail}
+                      onChange={e => onChangeHandler(e)}
+                    />
+                  </div>
+
+                  <div className="form-label-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Logo Link"
+                      name="photo"
+                      value={photo}
+                      onChange={e => onChangeHandler(e)}
+                    />
+                  </div>
+                  <div className="form-label-group">
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      placeholder="Description"
+                      name="description"
+                      value={description}
                       onChange={e => onChangeHandler(e)}
                     />
                   </div>

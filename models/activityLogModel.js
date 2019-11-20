@@ -5,6 +5,10 @@ const activityLogSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User"
   },
+  company: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Company"
+  },
   activity: {
     type: String,
     required: [true, "You must enter an activity"]
@@ -25,6 +29,14 @@ const activityLogSchema = new mongoose.Schema({
   openStatus: {
     type: Boolean,
     default: true
+  },
+  priority: {
+    type: String,
+    enum: ["low", "high"],
+    default: "low"
+  },
+  closeDate: {
+    type: Date
   },
   date: {
     type: Date,

@@ -21,12 +21,19 @@ const DeleteEmail = ({
   const [formData, setFormData] = useState({
     activity: "Email",
     subActivity: "Delete Email",
+    priority: "",
     operateEmail: "",
     description: "",
     active: false
   });
 
-  const { activity, subActivity, description, operateEmail } = formData;
+  const {
+    activity,
+    subActivity,
+    description,
+    operateEmail,
+    priority
+  } = formData;
 
   const onChangeHandler = e => {
     e.preventDefault();
@@ -63,16 +70,22 @@ const DeleteEmail = ({
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
-        <Link to="/" className="float-right">
+        <Link to="/addRequest">
+          <i className="fa fa-arrow-left text-muted bg-light rounded-circle p-2"></i>
+        </Link>{" "}
+        <Link to="/" className="">
           <i
-            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
+            className="fa fa-home fa-lg text-muted bg-light rounded-circle p-2"
+            aria-hidden="true"
+          ></i>
+        </Link>{" "}
+        <Link to="/addRequest">
+          <i
+            className="fa fa-plus-circle text-muted bg-light rounded-circle p-2"
             aria-hidden="true"
           ></i>
         </Link>
-        <Link to="/addRequest" className="btn btn-primary">
-          <i className="fa fa-arrow-left"> </i> Go Back
-        </Link>
-        <h1 className="pt-4">Delete Email</h1>
+        <h1 className="pt-4">Suspend Email</h1>
       </div>
 
       {sendingLoader ? (
@@ -116,10 +129,24 @@ const DeleteEmail = ({
                         <option className="text-muted">-Select Email-</option>
                         {emails.map(email => (
                           <option key={email._id} value={email._id}>
-                            {email.email}
+                            {email.operateEmail}
                           </option>
                         ))}
                         ;
+                      </select>
+                    </div>
+
+                    <label>Priority:</label>
+                    <div className="form-label-group">
+                      <select
+                        className="form-control"
+                        name="priority"
+                        value={priority}
+                        onChange={e => onChangeHandler(e)}
+                        required
+                      >
+                        <option value="low">Low</option>
+                        <option value="high">High</option>
                       </select>
                     </div>
 
@@ -165,7 +192,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getEmails, deleteEmail }
-)(withRouter(DeleteEmail));
+export default connect(mapStateToProps, { getEmails, deleteEmail })(
+  withRouter(DeleteEmail)
+);

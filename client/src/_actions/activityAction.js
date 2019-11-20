@@ -20,6 +20,23 @@ export const getCurrentActivity = id => async dispatch => {
   }
 };
 
+//Get Companies Activities
+export const getCompanyActivities = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/activity/companyActivities");
+    console.log(res.data);
+    dispatch({
+      type: types.GET_ACTIVITIES,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: types.ACTIVITY_ERROR,
+      payload: { status: err.response }
+    });
+  }
+};
+
 //Get all Activities
 export const getActivities = () => async dispatch => {
   try {

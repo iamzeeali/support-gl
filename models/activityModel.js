@@ -7,12 +7,10 @@ const activitySchema = new mongoose.Schema({
   },
   activityName: {
     type: String,
-    required: [true, "Please enter an activity name"],
-    unique: true
+    required: [true, "Please enter an activity name"]
   },
   subActivities: {
-    type: [String],
-    unique: true
+    type: [String]
   },
   active: {
     type: Boolean,
@@ -28,7 +26,7 @@ const activitySchema = new mongoose.Schema({
 activitySchema.pre(/^find/, function(next) {
   this.populate({
     path: "company",
-    select: "name"
+    select: "companyName"
   });
 
   next();

@@ -14,7 +14,8 @@ const initialState = {
   isAuthenticated: null,
   role: null,
   loading: true,
-  user: null,
+  user: {},
+  company: {},
   users: [],
   username: null
 };
@@ -30,6 +31,7 @@ export default function(state = initialState, action) {
         loading: false,
         user: payload.data,
         username: payload.data.name,
+        company: payload.data.company,
         role: payload.data.role
       };
     case GET_USERS:
@@ -66,8 +68,9 @@ export default function(state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
-        user: null,
+        user: {},
         username: null,
+        company: {},
         role: null
       };
     default:

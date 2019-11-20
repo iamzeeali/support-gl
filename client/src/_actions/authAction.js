@@ -26,7 +26,6 @@ export const loadUser = () => async dispatch => {
 export const getUsers = () => async dispatch => {
   try {
     const res = await axios.get("/api/user/");
-    console.log(res.data);
     dispatch({
       type: types.GET_USERS,
       payload: res.data.data
@@ -94,8 +93,12 @@ export const login = (email, password) => async dispatch => {
 
 // Logout / Clear Profile
 export const logout = () => dispatch => {
-  dispatch({ type: types.CLEAR_USER });
-  dispatch({ type: types.CLEAR_ACTIVITY });
-  dispatch({ type: types.CLEAR_COMPANY });
-  dispatch({ type: types.LOGOUT });
+  if (window.confirm("Confirm Logout?")) {
+    dispatch({ type: types.CLEAR_USER });
+    dispatch({ type: types.CLEAR_ACTIVITY });
+    dispatch({ type: types.CLEAR_COMPANY });
+    dispatch({ type: types.CLEAR_MEMBER });
+    dispatch({ type: types.CLEAR_REQUEST });
+    dispatch({ type: types.LOGOUT });
+  }
 };

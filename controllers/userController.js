@@ -60,6 +60,35 @@ exports.createUser = (req, res) => {
   });
 };
 
+//Get user's company members only
+exports.getMembers = catchAsync(async (req, res, next) => {
+  //to allow for nested getReviews on tour (small hack)
+  const docs = await User.find({ company: req.user.company.id }).sort({
+    date: -1
+  });
+  res.status(200).json({
+    status: "success",
+    result: docs.length,
+    data: docs
+  });
+});
+
+exports.deleteMember = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.params.id, { active: false });
+
+  res.status(204).json({
+    status: "success",
+    data: null
+  });
+});
+
+exports.createUser = (req, res) => {
+  res.status(500).json({
+    status: "error",
+    message: "This route is not defined, Please use /signup instead"
+  });
+};
+
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 //Do not update password with this

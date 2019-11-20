@@ -62,7 +62,7 @@ export const addCompany = (formData, history) => async dispatch => {
 };
 
 // Edit Company
-export const editCompany = (formData, history, id) => async dispatch => {
+export const editCompany = (formData, id, history) => async dispatch => {
   try {
     const config = {
       headers: {

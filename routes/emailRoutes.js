@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("admin", "user"));
+router.use(authController.restrictTo("super-admin", "user"));
 
 router
   .route("/")
@@ -17,14 +17,17 @@ router
 
 router
   .route("/all")
-  .get(authController.restrictTo("admin"), emailController.getAllEmails);
+  .get(authController.restrictTo("super-admin"), emailController.getAllEmails);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("admin", "user"));
+router.use(authController.restrictTo("super-admin", "user"));
 router
   .route("/:id")
   .get(emailController.getEmail)
   .patch(emailController.updateEmail)
-  .delete(authController.restrictTo("admin"), emailController.deleteEmail);
+  .delete(
+    authController.restrictTo("super-admin"),
+    emailController.deleteEmail
+  );
 
 module.exports = router;

@@ -5,14 +5,14 @@ import { connect } from "react-redux";
 import Sending from "../UI/Sending";
 import { addRequest } from "../../_actions/requestAction";
 import {
-  getActivities,
+  getCompanyActivities,
   populateSubActivities
 } from "../../_actions/activityAction";
 
 const AddRequest = ({
   auth: { username },
   addRequest,
-  getActivities,
+  getCompanyActivities,
   sendingLoader,
   populateSubActivities,
   activities,
@@ -20,21 +20,22 @@ const AddRequest = ({
   history
 }) => {
   useEffect(() => {
-    getActivities();
+    getCompanyActivities();
     //eslint-diable-next-line
-  }, [getActivities]);
+  }, [getCompanyActivities]);
 
   const [formData, setFormData] = useState({
     activity: "",
     subActivity: "",
-    description: ""
+    description: "",
+    priority: ""
   });
 
   const [selectData, setSelectData] = useState({
     selectedValue: ""
   });
 
-  const { activity, subActivity, description } = formData;
+  const { activity, subActivity, description, priority } = formData;
   const { selectedValue } = selectData;
 
   const onChangeSelect = e => {
@@ -148,15 +149,18 @@ const AddRequest = ({
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
-        <Link to="/" className="float-right">
+        <Link to="/request">
+          <i className="fa fa-arrow-left text-muted bg-light rounded-circle p-2"></i>
+        </Link>{" "}
+        <Link to="/" className="">
           <i
-            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
+            className="fa fa-home fa-lg text-muted bg-light rounded-circle p-2"
             aria-hidden="true"
           ></i>
-        </Link>
-        <Link to="/request" className="btn btn-primary">
-          <i className="fa fa-arrow-left"> </i> Go Back
-        </Link>
+        </Link>{" "}
+        <Link to="/request" className="btn btn-primary float-right">
+          <i class="fa fa-list"></i> {username} Request
+        </Link>{" "}
         <h1 className="pt-4">Add Request</h1>
         <small className="lead">Add new Request...</small>
       </div>
@@ -189,8 +193,9 @@ const AddRequest = ({
                         className="form-control"
                         value={activity}
                         onChange={e => onChangeSelect(e)}
+                        required
                       >
-                        <option className="text-muted">
+                        <option value="" disabled selected hidden>
                           -Select Activity-
                         </option>
 
@@ -208,15 +213,34 @@ const AddRequest = ({
                           value: 0
                         }}
                         onChange={e => onChangeHandler(e)}
+                        required
                       >
-                        <option className="text-muted">
+                        <option value="" disabled selected hidden>
                           -Select Sub Activity-
                         </option>
                         {subActivityOptions}
                       </select>
                     </div>
+                    <div className="form-label-group">
+                      <select
+                        className="form-control"
+                        name="priority"
+                        value={priority}
+                        onChange={e => onChangeHandler(e)}
+                        defaultValue="low"
+                        required
+                      >
+                        <option value="" disabled selected hidden>
+                          Choose Priority
+                        </option>
+                        <option value="low" default>
+                          Low
+                        </option>
+                        <option value="high">High</option>
+                      </select>
+                    </div>
 
-                    {selectedValue === "Email" ? modal : null}
+                    {selectedValue === "Email Management" ? modal : null}
 
                     <div className="form-label-group">
                       <textarea
@@ -249,7 +273,7 @@ const AddRequest = ({
 };
 
 AddRequest.propTypes = {
-  getActivities: PropTypes.func.isRequired,
+  getCompanyActivities: PropTypes.func.isRequired,
   addRequest: PropTypes.func.isRequired,
   populateSubActivities: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
@@ -262,7 +286,8 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { addRequest, getActivities, populateSubActivities }
-)(withRouter(AddRequest));
+export default connect(mapStateToProps, {
+  addRequest,
+  getCompanyActivities,
+  populateSubActivities
+})(withRouter(AddRequest));

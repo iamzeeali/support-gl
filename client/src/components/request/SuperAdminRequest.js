@@ -1,22 +1,35 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../UI/Spinner";
-import { getRequests } from "../../_actions/requestAction";
+import {
+  getAllRequests,
+  setCurrentRequest,
+  clearRequest,
+  deleteRequest
+} from "../../_actions/requestAction";
 import Moment from "react-moment";
 import "moment-timezone";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const UserRequest = ({
-  auth: { company, role },
-  getRequests,
+const SuperAdminRequest = ({
+  getAllRequests,
+  setCurrentRequest,
+  deleteRequest,
+  clearRequest,
   requests,
+  filtered,
   loading
 }) => {
   useEffect(() => {
-    getRequests();
+    getAllRequests();
     //eslint-diable-next-line
-  }, [getRequests]);
+  }, [getAllRequests]);
+
+  // const onDeleteHandler = id => {
+  //   deleteRequest(id);
+  //   clearRequest();
+  // };
 
   const openStatus = (
     <i class="fa fa-clock-o text-warning text-center" aria-hidden="true"></i>
@@ -35,36 +48,21 @@ const UserRequest = ({
   const lowPriority = (
     <span className="badge badge-warning text-center">Low</span>
   );
-
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
-        <Link to="/">
-          <i className="fa fa-arrow-left text-muted bg-light rounded-circle p-2"></i>
-        </Link>{" "}
-        <Link to="/" className="">
+        <Link to="/" className="float-right">
           <i
-            className="fa fa-home fa-lg text-muted bg-light rounded-circle p-2"
-            aria-hidden="true"
-          ></i>
-        </Link>{" "}
-        {role === "admin" ? (
-          <Link to="/adminRequest" className="btn btn-primary float-right">
-            <i class="fa fa-list"></i> {company.companyName} Request
-          </Link>
-        ) : null}{" "}
-        <Link to="/addRequest">
-          <i
-            className="fa fa-plus-circle text-muted bg-light rounded-circle p-2"
+            className="fa fa-home fa-lg text-dark border border-dark rounded-circle p-2"
             aria-hidden="true"
           ></i>
         </Link>
-        <h1 className="pt-4">My Requests</h1>
+        <h1 className="pt-4">Request Logs</h1>
         <small className="lead">Requests in the portal...</small>
         <br />
         <small>
           <i
-            class="fa fa-clock-o text-warning text-center fa-lg"
+            class="fa fa-hourglass-half text-warning text-center fa-lg"
             aria-hidden="true"
           >
             {" "}
@@ -84,8 +82,8 @@ const UserRequest = ({
       </div>
 
       {requests !== null && !loading ? (
-        <table className="table table-hover table-bordered container animated my-4 fadeIn my-4">
-          <thead className="thead-dark">
+        <table className="table table-responsive table-bordered container animated fadeIn my-2">
+          <thead>
             <tr>
               <th scope="col">Activity</th>
               <th scope="col">Sub Activities</th>
@@ -94,35 +92,36 @@ const UserRequest = ({
               <th scope="col">Req on</th>
               <th scope="col">Status</th>
               <th scope="col">Priority</th>
-              <th scope="col">Closed On</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {requests.map(request => (
-              <tr key={request._id}>
-                <td>{request.activity}</td>
-                <td>{request.subActivity}</td>
-                <td>{request.user.name}</td>
-                <td>{request.user.company.companyName}</td>
+            {requests.map(req => (
+              <tr key={req._id}>
+                <td>{req.activity}</td>
+                <td>{req.subActivity}</td>
+                <td>{req.user.name}</td>
+                <td>{req.user.company.companyName}</td>
                 <td>
                   {" "}
-                  <Moment format="DD/MM/YYYY, h:mm:ss a">{request.date}</Moment>
+                  <Moment format="DD/MM/YYYY, h:mm:ss a">{req.date}</Moment>
                 </td>
+                <td>{req.openStatus === true ? openStatus : closeStatus}</td>
+                <td> {req.priority === "low" ? lowPriority : highPriority}</td>
+
                 <td>
-                  {request.openStatus === true ? openStatus : closeStatus}
-                </td>
-                <td>
-                  {request.priority === "low" ? lowPriority : highPriority}
-                </td>
-                <td>
-                  {request.closeDate ? (
-                    <Moment format="DD/MM/YYYY, h:mm:ss a">
-                      {request.closeDate}
-                    </Moment>
-                  ) : (
-                    openStatus
-                  )}
+                  <Link
+                    title="Update Status"
+                    to={`/editRequest/${req._id}`}
+                    onClick={() => setCurrentRequest(req)}
+                  >
+                    <i className="fa fa-edit fa-lg"></i>
+                  </Link>{" "}
+                  &nbsp; &nbsp;
+                  {/* <Link title="Delete" onClick={() => onDeleteHandler(req._id)}>
+                    <i className="fa fa-trash text-danger fa-lg"></i>
+                  </Link> */}
                 </td>
               </tr>
             ))}
@@ -135,19 +134,22 @@ const UserRequest = ({
   );
 };
 
-UserRequest.propTypes = {
-  auth: PropTypes.object.isRequired,
-  getRequests: PropTypes.func.isRequired,
-  requests: PropTypes.array.isRequired
+SuperAdminRequest.propTypes = {
+  getAllRequests: PropTypes.func.isRequired,
+  deleteRequest: PropTypes.func.isRequired,
+  setCurrentRequest: PropTypes.func.isRequired,
+  clearRequest: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   requests: state.request.requests.data,
   request: state.request.request,
   filtered: state.request.filtered,
   loading: state.request.loading
 });
 export default connect(mapStateToProps, {
-  getRequests
-})(UserRequest);
+  getAllRequests,
+  deleteRequest,
+  setCurrentRequest,
+  clearRequest
+})(SuperAdminRequest);

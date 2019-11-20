@@ -1,23 +1,22 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../UI/Spinner";
-import { getCompanyRequests, clearRequest } from "../../_actions/requestAction";
+import {
+  getOpenStatus,
+  setCurrentRequest,
+  clearRequest,
+  deleteRequest
+} from "../../_actions/requestAction";
 import Moment from "react-moment";
 import "moment-timezone";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const AdminRequest = ({
-  auth: { username, role },
-
-  getCompanyRequests,
-  companyRequests,
-  companyRequestLoading
-}) => {
+const UserOpenRequest = ({ getOpenStatus, requests, loading }) => {
   useEffect(() => {
-    getCompanyRequests();
+    getOpenStatus();
     //eslint-diable-next-line
-  }, [getCompanyRequests]);
+  }, [getOpenStatus]);
 
   const openStatus = (
     <i class="fa fa-clock-o text-warning text-center" aria-hidden="true"></i>
@@ -40,7 +39,7 @@ const AdminRequest = ({
   return (
     <Fragment>
       <div className="form-title animated fadeIn">
-        <Link to="/request">
+        <Link to="/">
           <i className="fa fa-arrow-left text-muted bg-light rounded-circle p-2"></i>
         </Link>{" "}
         <Link to="/" className="">
@@ -50,7 +49,7 @@ const AdminRequest = ({
           ></i>
         </Link>{" "}
         <Link to="/request" className="btn btn-primary float-right">
-          <i class="fa fa-list"></i> {username} Request
+          <i class="fa fa-list"></i> All Requests
         </Link>{" "}
         <Link to="/addRequest">
           <i
@@ -58,7 +57,7 @@ const AdminRequest = ({
             aria-hidden="true"
           ></i>
         </Link>
-        <h1 className="pt-4">Company Requests</h1>
+        <h1 className="pt-4">Open Requests</h1>
         <small className="lead">Requests in the portal...</small>
         <br />
         <small>
@@ -82,10 +81,8 @@ const AdminRequest = ({
         </small>
       </div>
 
-      {companyRequests === null || companyRequestLoading ? (
-        <Spinner />
-      ) : (
-        <table className="table table-hover table-bordered animated my-4 fadeIn my-4 container">
+      {requests !== null && !loading ? (
+        <table className="table table-hover container table-bordered animated my-4 fadeIn my-4">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Activity</th>
@@ -95,12 +92,11 @@ const AdminRequest = ({
               <th scope="col">Req on</th>
               <th scope="col">Status</th>
               <th scope="col">Priority</th>
-              <th scope="col">Closed On</th>
             </tr>
           </thead>
 
           <tbody>
-            {companyRequests.map(request => (
+            {requests.map(request => (
               <tr key={request._id}>
                 <td>{request.activity}</td>
                 <td>{request.subActivity}</td>
@@ -116,33 +112,33 @@ const AdminRequest = ({
                 <td>
                   {request.priority === "low" ? lowPriority : highPriority}
                 </td>
-                <td>
-                  {request.closeDate ? (
-                    <Moment format="DD/MM/YYYY, h:mm:ss a">
-                      {request.closeDate}
-                    </Moment>
-                  ) : (
-                    openStatus
-                  )}
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
+      ) : (
+        <Spinner />
       )}
     </Fragment>
   );
 };
 
-AdminRequest.propTypes = {
-  getCompanyRequests: PropTypes.func.isRequired,
-  clearRequest: PropTypes.func.isRequired,
-  companyRequests: PropTypes.array.isRequired
+UserOpenRequest.propTypes = {
+  getOpenStatus: PropTypes.func.isRequired,
+  deleteRequest: PropTypes.func.isRequired,
+  setCurrentRequest: PropTypes.func.isRequired,
+  clearRequest: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  companyRequests: state.request.companyRequests.data,
-  companyRequestLoading: state.request.companyRequestLoading
+  requests: state.request.requests.data,
+  request: state.request.request,
+  filtered: state.request.filtered,
+  loading: state.request.loading
 });
-export default connect(mapStateToProps, { getCompanyRequests })(AdminRequest);
+export default connect(mapStateToProps, {
+  getOpenStatus,
+  deleteRequest,
+  setCurrentRequest,
+  clearRequest
+})(UserOpenRequest);

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-var uniqueValidator = require("mongoose-unique-validator");
+// var uniqueValidator = require("mongoose-unique-validator");
 
 const emailSchema = new mongoose.Schema({
   user: {
@@ -15,10 +15,12 @@ const emailSchema = new mongoose.Schema({
   },
   operateEmail: {
     type: String,
-    unique: true,
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
     required: false
+  },
+  operatePassword: {
+    type: String
   },
   active: {
     type: Boolean,
@@ -35,9 +37,6 @@ emailSchema.pre(/^find/, function(next) {
   this.populate({
     path: "user",
     select: "name email company"
-  }).populate({
-    path: "company",
-    select: "companyName"
   });
 
   next();
@@ -48,6 +47,6 @@ emailSchema.pre(/^find/, function(next) {
   next();
 });
 
-emailSchema.plugin(uniqueValidator);
+// emailSchema.plugin(uniqueValidator);
 
 module.exports = Email = mongoose.model("Email", emailSchema);

@@ -46,6 +46,7 @@ const companySchema = new mongoose.Schema({
     required: false
   },
   photo: String,
+  description: String,
   active: {
     type: Boolean,
     default: true,

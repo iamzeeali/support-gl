@@ -16,7 +16,9 @@ const AddCompany = ({ addCompany, history }) => {
     companyEmail: "",
     contactPerson: "",
     contactPersonPhone: "",
-    contactPersonEmail: ""
+    contactPersonEmail: "",
+    photo: "",
+    description: ""
   });
 
   const {
@@ -30,7 +32,9 @@ const AddCompany = ({ addCompany, history }) => {
     companyEmail,
     contactPerson,
     contactPersonPhone,
-    contactPersonEmail
+    contactPersonEmail,
+    photo,
+    description
   } = formData;
 
   const onChangeHandler = e => {
@@ -134,7 +138,7 @@ const AddCompany = ({ addCompany, history }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Address"
+                      placeholder="Company Address"
                       name="companyAddress"
                       value={companyAddress}
                       onChange={e => onChangeHandler(e)}
@@ -145,7 +149,7 @@ const AddCompany = ({ addCompany, history }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Company Phone"
                       name="companyPhone"
                       value={companyPhone}
                       onChange={e => onChangeHandler(e)}
@@ -156,7 +160,7 @@ const AddCompany = ({ addCompany, history }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Email"
+                      placeholder="Company Email"
                       name="companyEmail"
                       value={companyEmail}
                       onChange={e => onChangeHandler(e)}
@@ -181,7 +185,7 @@ const AddCompany = ({ addCompany, history }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Contact Person Phone"
                       name="contactPersonPhone"
                       value={contactPersonPhone}
                       onChange={e => onChangeHandler(e)}
@@ -192,9 +196,31 @@ const AddCompany = ({ addCompany, history }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Email"
+                      placeholder="Contact Person Email"
                       name="contactPersonEmail"
                       value={contactPersonEmail}
+                      onChange={e => onChangeHandler(e)}
+                    />
+                  </div>
+
+                  <div className="form-label-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Logo Link"
+                      name="photo"
+                      value={photo}
+                      onChange={e => onChangeHandler(e)}
+                    />
+                  </div>
+
+                  <div className="form-label-group">
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      placeholder="Description"
+                      name="description"
+                      value={description}
                       onChange={e => onChangeHandler(e)}
                     />
                   </div>

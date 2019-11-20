@@ -1,16 +1,23 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addActivity } from "../../_actions/activityAction";
+import { getCompanies } from "../../_actions/companyAction";
 
-const AddActivity = ({ addActivity, history }) => {
+const AddActivity = ({ addActivity, companies, getCompanies, history }) => {
+  useEffect(() => {
+    getCompanies();
+    //eslint-diable-next-line
+  }, [getCompanies]);
+
   const [formData, setFormData] = useState({
+    company: "",
     activityName: "",
     subActivities: ""
   });
 
-  const { activityName, subActivities } = formData;
+  const { activityName, subActivities, company } = formData;
 
   const onChangeHandler = e => {
     e.preventDefault();
@@ -47,6 +54,22 @@ const AddActivity = ({ addActivity, history }) => {
                   className="form-signin"
                   onSubmit={e => onSubmitHandler(e)}
                 >
+                  <div className="form-label-group">
+                    <select
+                      className="form-control"
+                      value={company}
+                      name="company"
+                      onChange={e => onChangeHandler(e)}
+                    >
+                      <option className="text-muted">-Select Company-</option>
+                      {companies.map(comp => (
+                        <option key={comp._id} value={comp._id}>
+                          {comp.companyName}
+                        </option>
+                      ))}
+                      ;
+                    </select>
+                  </div>
                   <div className="form-label-group">
                     <input
                       type="text"
@@ -94,10 +117,14 @@ const AddActivity = ({ addActivity, history }) => {
 };
 
 AddActivity.propTypes = {
+  getCompanies: PropTypes.func.isRequired,
   addActivity: PropTypes.func.isRequired
 };
 
+const mapStatetoProps = state => ({
+  companies: state.company.companies
+});
 export default connect(
-  null,
-  { addActivity }
+  mapStatetoProps,
+  { addActivity, getCompanies }
 )(withRouter(AddActivity));

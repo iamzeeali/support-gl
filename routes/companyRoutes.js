@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("admin"));
+router.use(authController.restrictTo("super-admin"));
 
 router
   .route("/")
@@ -19,6 +19,9 @@ router
   .route("/:id")
   .get(companyController.getCompany)
   .patch(companyController.updateCompany)
-  .delete(authController.restrictTo("admin"), companyController.deleteCompany);
+  .delete(
+    authController.restrictTo("super-admin"),
+    companyController.deleteCompany
+  );
 
 module.exports = router;

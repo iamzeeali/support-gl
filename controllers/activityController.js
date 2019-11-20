@@ -1,6 +1,7 @@
 const Activity = require("../models/activityModel");
 const factory = require("./handlerFactory");
 const catchAsync = require("../utils/catchAsync");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.createActivity = catchAsync(async (req, res, next) => {
   const { company, activityName, subActivities } = req.body;
@@ -27,6 +28,22 @@ exports.createActivity = catchAsync(async (req, res, next) => {
     res.status(500).send(err.message);
   }
   next();
+});
+
+//Get Company's activities only
+exports.getCompanyActivities = catchAsync(async (req, res, next) => {
+  const features = await new APIFeatures(
+    Activity.find({ company: req.user.company.id }),
+    req.query
+  )
+    .sort()
+    .paginate();
+  const docs = await features.query;
+  res.status(200).json({
+    status: "success",
+    result: docs.length,
+    data: docs
+  });
 });
 
 exports.getAllActivities = factory.getAll(Activity);

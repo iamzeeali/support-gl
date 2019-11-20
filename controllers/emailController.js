@@ -22,11 +22,20 @@ exports.getEmails = catchAsync(async (req, res, next) => {
 });
 
 exports.createEmail = catchAsync(async (req, res, next) => {
-  const { email } = req.body;
+  const { operateEmail, password } = req.body;
 
   try {
-    const newEmail = new Email({
-      email,
+    let newEmail = await Email.findOne({ operateEmail });
+
+    if (newEmail) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Email already exists" }] });
+    }
+
+    newEmail = new Email({
+      operateEmail,
+      password,
       user: req.user,
       company: req.user.company
     });

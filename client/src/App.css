@@ -15,7 +15,8 @@
 .App {
   text-align: center;
 }
-
+.back-image {
+}
 .App-logo {
   height: 40vmin;
 }
@@ -575,7 +576,6 @@ h2:hover {
   padding: 20px 0;
 }
 
-
 /*************************************SWITCH
 
 
@@ -587,11 +587,13 @@ h2:hover {
   display: inline-block;
   width: 60px;
   height: 34px;
-  float:right;
+  float: right;
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+  display: none;
+}
 
 /* The slider */
 .slider {
@@ -602,8 +604,8 @@ h2:hover {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -614,15 +616,15 @@ h2:hover {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input.default:checked + .slider {
   background-color: #444;
 }
 input.primary:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 input.success:checked + .slider {
   background-color: #8bc34a;
@@ -631,14 +633,14 @@ input.info:checked + .slider {
   background-color: #3de0f5;
 }
 input.warning:checked + .slider {
-  background-color: #FFC107;
+  background-color: #ffc107;
 }
 input.danger:checked + .slider {
   background-color: #f44336;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -654,4 +656,238 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/**********************************************************DASHBOARD CARDS****************************************/
+.card {
+  overflow: hidden;
+  border-radius: 0 !important;
+}
+
+.card-body .rotate {
+  z-index: 8;
+  float: right;
+  height: 100%;
+}
+
+.card-body .rotate i {
+  color: rgba(20, 20, 20, 0.15);
+  position: absolute;
+  left: 0;
+  left: auto;
+  right: -10px;
+  bottom: 0;
+  display: block;
+  -webkit-transform: rotate(-44deg);
+  -moz-transform: rotate(-44deg);
+  -o-transform: rotate(-44deg);
+  -ms-transform: rotate(-44deg);
+  transform: rotate(-44deg);
+}
+
+/*************************************************PROFILE**************************************************************/
+
+.profile-page .page-header {
+  height: 250px;
+  background-position: center;
+}
+
+.page-header {
+  height: 100vh;
+  background-size: cover;
+  /* background: rgb(33, 22, 212);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 22, 212, 1) 0%,
+    rgba(33, 150, 243, 1) 74%,
+    rgba(0, 212, 255, 1) 100%
+  ); */
+  background: url("https://www.up.edu/alumni/images/la-chapter-banner.png")
+    no-repeat center center/cover;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-filter:after,
+.header-filter:before {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+  content: "";
+}
+
+.header-filter::before {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.main-raised {
+  margin: -60px 30px 0;
+  border-radius: 6px;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.main {
+  background: #fff;
+  position: relative;
+  z-index: 3;
+}
+
+.profile-page .profile {
+  text-align: center;
+}
+
+.profile-page .profile img {
+  max-width: 160px;
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto;
+  -webkit-transform: translate3d(0, -50%, 0);
+  -moz-transform: translate3d(0, -50%, 0);
+  -o-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.img-raised {
+  box-shadow: 0 5px 15px -8px rgba(0, 0, 0, 0.24),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.img-fluid,
+.img-thumbnail {
+  max-width: 100%;
+  height: auto;
+}
+
+.title {
+  margin-bottom: 25px;
+  min-height: 32px;
+  color: #3c4858;
+  font-weight: 700;
+}
+
+.profile-page .description {
+  margin: 1.071rem auto 0;
+  max-width: 600px;
+  color: #999;
+  font-weight: 300;
+}
+
+p {
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+.profile-page .profile-tabs {
+  margin-top: 4.284rem;
+}
+
+.dropdown {
+  padding-top: 7px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.thought {
+  margin-top: 130px;
+  margin-bottom: 50px;
+}
+
+.table th,
+td {
+  text-align: center !important;
+}
+
+/* ADMIN CARDS REPORT */
+.card-counter {
+  box-shadow: 2px 2px 10px #dadada;
+  margin: 5px;
+  padding: 20px 10px;
+  background-color: #fff;
+  height: 100px;
+  border-radius: 5px;
+  transition: 0.3s linear all;
+}
+
+.card-counter:hover {
+  box-shadow: 4px 4px 20px #dadada;
+  transition: 0.3s linear all;
+}
+
+.card-counter.primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.card-counter.danger {
+  background-color: #ef5350;
+  color: #fff;
+}
+
+.card-counter.success {
+  background-color: #66bb6a;
+  color: #fff;
+}
+
+.card-counter.info {
+  background-color: #26c6da;
+  color: #fff;
+}
+
+.card-counter i {
+  font-size: 5em;
+  opacity: 0.2;
+}
+
+.card-counter .count-numbers {
+  position: absolute;
+  right: 35px;
+  top: 20px;
+  font-size: 32px;
+  display: block;
+}
+
+.card-counter .count-name {
+  position: absolute;
+  right: 35px;
+  top: 65px;
+  font-style: italic;
+  text-transform: capitalize;
+  opacity: 0.5;
+  display: block;
+  font-size: 18px;
 }

@@ -50,6 +50,7 @@ const Activity = ({
             <tr>
               <th>Activity</th>
               <th>Sub Activities</th>
+              <th>Company</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -66,6 +67,8 @@ const Activity = ({
                     ))}
                   </ul>
                 </td>
+                <td>{act.company.companyName}</td>
+
                 <td>
                   <Link
                     title="Edit"

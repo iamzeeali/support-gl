@@ -6,7 +6,7 @@ import { editRequest, getCurrentRequest } from "../../_actions/requestAction";
 import Moment from "react-moment";
 import "moment-timezone";
 
-const EditAdminRequest = ({
+const EditSuperAdminRequest = ({
   request: { request, loading },
   open,
   editRequest,
@@ -14,8 +14,13 @@ const EditAdminRequest = ({
   history,
   match
 }) => {
+  var today = new Date();
+
+  var currentDate = today.toISOString();
+
   const [formData, setFormData] = useState({
-    openStatus: null
+    openStatus: null,
+    closeDate: null
   });
 
   const [requestData, setRequestData] = useState({
@@ -52,7 +57,8 @@ const EditAdminRequest = ({
 
   const toggleStatus = e => {
     setFormData({
-      openStatus: openStatus ? false : true
+      openStatus: openStatus ? false : true,
+      closeDate: currentDate
     });
   };
 
@@ -165,7 +171,7 @@ const EditAdminRequest = ({
   );
 };
 
-EditAdminRequest.propTypes = {
+EditSuperAdminRequest.propTypes = {
   editRequest: PropTypes.func.isRequired,
   getCurrentRequest: PropTypes.func.isRequired,
   request: PropTypes.object.isRequired
@@ -176,7 +182,6 @@ const mapStateToProps = state => ({
   open: state.request.open
 });
 
-export default connect(
-  mapStateToProps,
-  { editRequest, getCurrentRequest }
-)(withRouter(EditAdminRequest));
+export default connect(mapStateToProps, { editRequest, getCurrentRequest })(
+  withRouter(EditSuperAdminRequest)
+);

@@ -3,20 +3,27 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Sending from "../UI/Sending";
-import { addEmail } from "../../_actions/requestAction";
+import { changePassword, getEmails } from "../../_actions/requestAction";
 
-const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
+const ChangePassword = ({
+  auth: { username },
+  getEmails,
+  changePassword,
+  emails,
+  sendingLoader,
+  history
+}) => {
   useEffect(() => {
+    getEmails();
     //eslint-diable-next-line
-  }, []);
+  }, [getEmails]);
 
   const [formData, setFormData] = useState({
     activity: "Email",
-    subActivity: "Create Email",
-    email: "",
+    subActivity: "Change Password",
+    priority: "",
     operateEmail: "",
-    description: "",
-    priority: ""
+    description: ""
   });
 
   const {
@@ -34,11 +41,7 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    try {
-      addEmail(formData, history);
-    } catch (error) {
-      console.log(error);
-    }
+    changePassword(formData, history);
   };
 
   var today = new Date();
@@ -47,7 +50,7 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
   var minutes = today.getMinutes();
   var ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
+  hours = hours ? hours : 12;
   minutes = minutes < 10 ? "0" + minutes : minutes;
 
   var date =
@@ -77,11 +80,11 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
         </Link>{" "}
         <Link to="/addRequest">
           <i
-            className="fa fa-plus-circle text-muted bg-light rounded-circle p-2"
+            className="fa fa-plus-circle text-muted bg-light rounded-circle p-2 float-left"
             aria-hidden="true"
           ></i>
         </Link>
-        <h1 className="pt-4">Add Email</h1>
+        <h1 className="pt-4">Change Password</h1>
       </div>
 
       {sendingLoader ? (
@@ -110,22 +113,26 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
                         Activity:
                         <br /> <b>{activity}</b>
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-3">
                         Sub Activity: <br /> <b>{subActivity}</b>
                       </div>
                     </div>
 
                     <div className="form-label-group">
-                      <input
-                        type="email"
+                      <select
                         className="form-control"
-                        placeholder="Email address you want to create"
-                        name="operateEmail"
                         value={operateEmail}
+                        name="operateEmail"
                         onChange={e => onChangeHandler(e)}
-                        required
-                        autoFocus
-                      />
+                      >
+                        <option className="text-muted">-Select Email-</option>
+                        {emails.map(email => (
+                          <option key={email._id} value={email.operateEmail}>
+                            {email.operateEmail}
+                          </option>
+                        ))}
+                        ;
+                      </select>
                     </div>
 
                     <label>Priority:</label>
@@ -172,18 +179,18 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
   );
 };
 
-AddEmail.propTypes = {
-  getActivities: PropTypes.func.isRequired,
-  addEmail: PropTypes.func.isRequired,
-  populateSubActivities: PropTypes.func.isRequired,
+ChangePassword.propTypes = {
+  changePassword: PropTypes.func.isRequired,
+  getEmails: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  activities: state.activity.activities,
-  subActivities: state.activity.subActivities,
+  emails: state.request.emails,
   sendingLoader: state.request.sendingLoader,
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { addEmail })(withRouter(AddEmail));
+export default connect(mapStateToProps, { getEmails, changePassword })(
+  withRouter(ChangePassword)
+);
