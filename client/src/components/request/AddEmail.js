@@ -34,11 +34,8 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    try {
-      addEmail(formData, history);
-    } catch (error) {
-      console.log(error);
-    }
+
+    addEmail(formData, history);
   };
 
   var today = new Date();

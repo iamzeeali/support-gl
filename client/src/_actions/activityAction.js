@@ -24,7 +24,6 @@ export const getCurrentActivity = id => async dispatch => {
 export const getCompanyActivities = () => async dispatch => {
   try {
     const res = await axios.get("/api/activity/companyActivities");
-    console.log(res.data);
     dispatch({
       type: types.GET_ACTIVITIES,
       payload: res.data.data
@@ -54,7 +53,6 @@ export const getActivities = () => async dispatch => {
 };
 
 export const populateSubActivities = activity => async dispatch => {
-  console.log(activity);
   try {
     dispatch({
       type: types.POPULATE_SUBACTIVITIES,

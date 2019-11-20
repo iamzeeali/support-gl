@@ -26,7 +26,6 @@ export default function(state = initialState, action) {
         loading: false
       };
     case types.POPULATE_SUBACTIVITIES:
-      console.log(state.activities);
       return {
         ...state,
         subActivities: state.activities.find(
