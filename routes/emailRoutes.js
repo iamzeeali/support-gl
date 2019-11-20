@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(authController.protect);
 
 //Restrict all router after this middleware to admin only
-router.use(authController.restrictTo("super-admin", "user"));
+router.use(authController.restrictTo("super-admin", "user", "admin"));
 
 router
   .route("/")
