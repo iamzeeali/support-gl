@@ -130,7 +130,6 @@ const DeleteEmail = ({
                         <option value="" disabled selected hidden>
                           Select Email
                         </option>
-                        <option className="text-muted">-Select Email-</option>
                         {emails.map(email => (
                           <option key={email._id} value={email._id}>
                             {email.operateEmail}
