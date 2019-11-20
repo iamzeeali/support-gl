@@ -135,7 +135,6 @@ const ChangePassword = ({
                       </select>
                     </div>
 
-                    <label>Priority:</label>
                     <div className="form-label-group">
                       <select
                         className="form-control"
@@ -144,7 +143,12 @@ const ChangePassword = ({
                         onChange={e => onChangeHandler(e)}
                         required
                       >
-                        <option value="low">Low</option>
+                        <option value="" disabled selected hidden>
+                          Choose Priority
+                        </option>
+                        <option value="low" default>
+                          Low
+                        </option>
                         <option value="high">High</option>
                       </select>
                     </div>

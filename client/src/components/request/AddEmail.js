@@ -134,7 +134,12 @@ const AddEmail = ({ auth: { username }, addEmail, sendingLoader, history }) => {
                         onChange={e => onChangeHandler(e)}
                         required
                       >
-                        <option value="low">Low</option>
+                        <option value="" disabled selected hidden>
+                          Choose Priority
+                        </option>
+                        <option value="low" default>
+                          Low
+                        </option>
                         <option value="high">High</option>
                       </select>
                     </div>
