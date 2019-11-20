@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
-import Spinner from "../UI/Spinner";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SuperAdminDashboard from "./SuperAdminDashboard";
@@ -14,9 +13,7 @@ const Dashboard = ({ auth: { isAuthenticated, loading, role }, requests }) => {
   } else if (isAuthenticated && role === "admin") {
     dashboard = <AdminDashboard />;
   } else {
-    {
-      dashboard = <UserDashboard />;
-    }
+    dashboard = <UserDashboard />;
   }
 
   return <Fragment>{dashboard}</Fragment>;

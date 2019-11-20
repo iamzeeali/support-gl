@@ -72,7 +72,7 @@ const Member = ({
                   {user._id !== mem._id ? (
                     <Link
                       title="Disable Member"
-                      to="#!"
+                      to="#"
                       onClick={() => onDeleteHandler(mem._id)}
                     >
                       <i className="fa fa-ban text-danger fa-lg"></i>
@@ -80,7 +80,6 @@ const Member = ({
                   ) : (
                     <Link
                       title="Can't disable yourself"
-                      onClick="return false"
                       style={{ cursor: "not-allowed" }}
                     >
                       <i className="fa fa-ban text-danger fa-lg"></i>

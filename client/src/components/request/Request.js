@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import SuperAdminRequest from "./SuperAdminRequest";
-import AdminRequest from "./AdminRequest";
 import UserRequest from "./UserRequest";
 
 const Request = ({ auth: { isAuthenticated, loading, role } }) => {

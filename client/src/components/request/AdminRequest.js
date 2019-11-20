@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../UI/Spinner";
-import { getCompanyRequests, clearRequest } from "../../_actions/requestAction";
+import { getCompanyRequests } from "../../_actions/requestAction";
 import Moment from "react-moment";
 import "moment-timezone";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const AdminRequest = ({
-  auth: { username, role },
+  auth: { username },
 
   getCompanyRequests,
   companyRequests,

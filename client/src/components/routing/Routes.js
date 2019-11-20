@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Switch } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";

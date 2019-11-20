@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import {
   getRequests,
   getOpenStatusCount,
@@ -14,10 +14,7 @@ const MyReport = ({
   auth: { company, username, role },
   requests,
   openStatusCount,
-  getOpenStatusCount,
-  thirtyDaysRequestsCount,
-  get30DaysRequestsCount,
-  getRequests
+  thirtyDaysRequestsCount
 }) => {
   const [chartData, setChartData] = useState({
     PieChartData: {},
@@ -50,7 +47,7 @@ const MyReport = ({
     });
 
     //eslint-diable-next-line
-  }, []);
+  }, [chartData, openStatusCount, requests.result, thirtyDaysRequestsCount]);
 
   const { PieChartData, barChartData } = chartData;
 

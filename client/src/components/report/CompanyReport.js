@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../UI/Spinner";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import {
   getCompanyRequests,
   getCompanyOpenStatusCount,
@@ -16,11 +16,7 @@ const CompanyReport = ({
   companyRequests,
   companyOpenStatusCount,
   companyThirtyDaysRequestsCount,
-  getCompanyRequests,
-  clearRequest,
-  loading,
-  getCompanyOpenStatusCount,
-  getCompany30DaysRequestsCount
+  loading
 }) => {
   const [chartData, setChartData] = useState({
     PieChartData: {},
@@ -56,7 +52,12 @@ const CompanyReport = ({
     });
 
     //eslint-diable-next-line
-  }, []);
+  }, [
+    chartData,
+    companyOpenStatusCount,
+    companyRequests.result,
+    companyThirtyDaysRequestsCount
+  ]);
 
   const { PieChartData, barChartData } = chartData;
 

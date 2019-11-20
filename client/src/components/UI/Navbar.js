@@ -66,10 +66,10 @@ const Navbar = ({
                 >
                   <UIAvatar
                     name={username}
-                    size="36"
+                    size={36}
                     background="#E61313"
                     color="#ffffff"
-                    rounded="true"
+                    rounded={true}
                     bold="true"
                   />
                 </Link>
@@ -140,8 +140,8 @@ const Navbar = ({
               </li>
 
               <li className="nav-item dropdown">
-                <i class="dropbtn fa fa-envelope fa-lg lead nav-link"></i>
-                <div class="dropdown-content">
+                <i className="dropbtn fa fa-envelope fa-lg lead nav-link"></i>
+                <div className="dropdown-content">
                   <Link to="/addEmail">Add Email</Link>
                   <Link to="/deleteEmail">Suspend Email</Link>
                   <Link to="/changePassword">Change Password</Link>
@@ -188,10 +188,10 @@ const Navbar = ({
                   {" "}
                   <UIAvatar
                     name={username}
-                    size="36"
+                    size={36}
                     background="#E61313"
                     color="#ffffff"
-                    rounded="true"
+                    rounded={true}
                     bold="true"
                   />
                 </Link>
