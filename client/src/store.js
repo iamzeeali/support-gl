@@ -8,8 +8,8 @@ const initialState = {};
 const middleware = [thunk];
 
 const devTools =
-  process.env.NODE_ENV == "production"
-    ? "window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function(){}"
+  process.env.NODE_ENV === "production"
+    ? applyMiddleware(...middleware)
     : composeWithDevTools(applyMiddleware(...middleware));
 
 const store = createStore(rootReducer, initialState, devTools);
